@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: Plug Digital
+ * Plugin Name: PlugDigital
  * Description: Optimización y componentes de PlugDigital.com
  * Plugin URI: https://www.plugdigital.com
  * Author: Manuel Padilla
@@ -29,26 +29,6 @@ along with PlugDigital. If not, see {URI to Plugin License}.
 
 defined( 'ABSPATH' ) or exit;
 
-function pdmx_add_our_link(){
-	global $wp_admin_bar;
+define( 'PLUGDIGITAL__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 
-	$wp_admin_bar->add_menu( array(
-		'id'    => 'plugdigital-site',
-		'title' => 'Plug Digital',
-		'href'  => 'https://www.plugdigital.net'
-	) );
-}
-add_action( 'wp_before_admin_bar_render', 'pdmx_add_our_link' );
-
-// Add Powered By Plug Digital at login form
-function pdmx_login_powered() { ?>
-	<div style="text-align: center">
-		<div style="padding: 2em 0 1em">
-			Diseño y Desarrollo Web por <strong><a href="https://www.plugdigital.net" title="Diseño y Desarrollo de Páginas Web en Cuernavava, Morelos">Plug Digital</a></strong>
-		</div>
-		<div>
-			<a href="https://www.plugdigital.net" title="Diseño y Desarrollo de Páginas Web en Cuernavava, Morelos"><img src="https://www.plugdigital.net/wp-content/uploads/2017/05/plug-mini.png" title="Diseño y Desarrollo de Páginas Web en Cuernavava, Morelos"></a>
-		</div>
-	</div>
-<?php }
-add_action( 'login_footer', 'pdmx_login_powered' );
+require_once( PLUGDIGITAL__PLUGIN_DIR . 'class.plugdigital.php' );
