@@ -32,3 +32,5 @@ defined( 'ABSPATH' ) or exit;
 define( 'PLUGDIGITAL__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 
 require_once( PLUGDIGITAL__PLUGIN_DIR . 'class.plugdigital.php' );
+
+add_action( 'init', array( 'pdmx', 'init' ) );
