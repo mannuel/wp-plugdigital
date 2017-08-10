@@ -31,4 +31,25 @@
 
 		<p><?php _e( 'Get your Facebook Pixel here <a href="https://www.facebook.com/ads/manager/pixel" target="_blank">Facebook Pixel</a>','PlugDigital' ); ?></p>
 	</div>
+
+	<div class="card">
+		<h2>Login Image</h2>
+
+		<p><?php _e( 'Change the login form image' ); ?></p>
+
+		<form action="" method="post">
+			<?php wp_nonce_field( pdmx::NONCE ) ?>
+			<input type="hidden" name="action" value="enter-pdmx-login-image">
+			<label>Image</label>
+			<input type="button" class="button button-secondary" value="Upload login image" id="upload-login-image-button">
+			<input type="hidden" name="pdmx-login-image" id="pdmx-login-image" value="<?php echo get_option( 'pdmx_login_image' ); ?>">
+
+			<input type="submit" name="submit" id="submit" class="button button-primary button-large pdmx-button" value="<?php _e( 'Save', 'PlugDigital' );?>">
+		</form>
+
+		<?php if (get_option( 'pdmx_login_image' )): ?>
+			<h3><?php _e( 'Current image', 'PlugDigital' ); ?></h3>
+			<div id="login-image-current" style="background-image: url(<?php echo get_option( 'pdmx_login_image' ); ?>);"></div>
+		<?php endif; ?>
+	</div>
 </div>

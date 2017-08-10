@@ -20,6 +20,11 @@ class pdmx {
 			self::enter_pdmx_facebook_pixel_id();
 		}
 
+		// Facebook Pixel ID?
+		if ( isset( $_POST['action'] ) && $_POST['action'] == 'enter-pdmx-login-image' ) {
+			self::enter_pdmx_login_image();
+		}
+
 		if ( ! self::$initiated ) {
 			self::init_hooks();
 		}
@@ -36,12 +41,26 @@ class pdmx {
 		add_action( 'admin_menu', array( 'pdmx', 'pdmx_settings_menu' ) );
 		add_action( 'wp_head', array( 'pdmx', 'pdmx_google_analytics_code' ) );
 		add_action( 'wp_head', array( 'pdmx', 'pdmx_facebook_pixel_code' ) );
+		add_action( 'admin_enqueue_scripts', array( 'pdmx', 'pdmx_admin_scripts' ) );
+	}
+
+	/**
+	 * Enqueue Scripts
+	 */
+	public static function pdmx_admin_scripts() {
+		wp_register_style( 'pdmx-admin-styles', plugin_dir_url( __FILE__ ) . 'assets/css/plugdigital.admin.css', array(), '1.0.0', 'all' );
+		wp_enqueue_style( 'pdmx-admin-styles' );
+
+		wp_enqueue_media();
+
+		wp_register_script( 'pdmx-admin-script', plugin_dir_url( __FILE__ ) . 'assets/js/plugdigital.admin.js', array('jquery'), '1.0.0', true );
+		wp_enqueue_script( 'pdmx-admin-script' );
 	}
 
 	/**
 	 * Add Plug Digital link at top bar
 	 */
-	public static function pdmx_add_our_link(){
+	public static function pdmx_add_our_link() {
 		global $wp_admin_bar;
 
 		$wp_admin_bar->add_menu( array(
@@ -102,6 +121,18 @@ class pdmx {
 			return false;
 
 		update_option( 'pdmx_facebook_pixel_id', $_POST['pdmx-facebook-pixel-id'] );
+
+		return true;
+	}
+
+	/**
+	 * Login image DB Save
+	 */
+	public static function enter_pdmx_login_image() {
+		if ( !wp_verify_nonce( $_POST['_wpnonce'], self::NONCE ) )
+			return false;
+
+		update_option( 'pdmx_login_image', $_POST['pdmx-login-image'] );
 
 		return true;
 	}
