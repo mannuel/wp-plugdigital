@@ -7,8 +7,14 @@ class pdmx {
 	private static $initiated = false;
 
 	public static function init() {
+		// Google Analytics ID?
 		if ( isset( $_POST['action'] ) && $_POST['action'] == 'enter-pdmx-google-analytics-id' ) {
 			self::enter_pdmx_google_analytics_id();
+		}
+
+		// Facebook Pixel ID?
+		if ( isset( $_POST['action'] ) && $_POST['action'] == 'enter-pdmx-facebook-pixel-id' ) {
+			self::enter_pdmx_facebook_pixel_id();
 		}
 
 		if ( ! self::$initiated ) {
@@ -26,6 +32,7 @@ class pdmx {
 		add_action( 'login_footer', array( 'pdmx', 'pdmx_login_powered' ) );
 		add_action( 'admin_menu', array( 'pdmx', 'pdmx_settings_menu' ) );
 		add_action( 'wp_head', array( 'pdmx', 'pdmx_google_analytics_code' ) );
+		add_action( 'wp_head', array( 'pdmx', 'pdmx_facebook_pixel_code' ) );
 	}
 
 	/**
@@ -72,12 +79,26 @@ class pdmx {
 		add_options_page( 'Optimización y Rendimiento', 'Optimización y Rendimiento', 'manage_options', 'pdmx-settings-menu', 'pdmx::pdmx_start_page' );
 	}
 
-
+	/**
+	 * Google Analytics ID DB Save
+	 */
 	public static function enter_pdmx_google_analytics_id() {
 		if ( !wp_verify_nonce( $_POST['_wpnonce'], self::NONCE ) )
 			return false;
 
 		update_option( 'pdmx_google_analytics_id', $_POST['pdmx-google-analytics-id'] );
+
+		return true;
+	}
+
+	/**
+	 * Facebook Pixel ID DB Save
+	 */
+	public static function enter_pdmx_facebook_pixel_id() {
+		if ( !wp_verify_nonce( $_POST['_wpnonce'], self::NONCE ) )
+			return false;
+
+		update_option( 'pdmx_facebook_pixel_id', $_POST['pdmx-facebook-pixel-id'] );
 
 		return true;
 	}
@@ -98,6 +119,27 @@ class pdmx {
 				ga('send', 'pageview');
 			</script>
 			<!-- END Google Analytics -->
+		<?php endif;
+	}
+
+
+	/**
+	 * Add Facebook Pixel to the head
+	 */
+	public static function pdmx_facebook_pixel_code( ) {
+		if ( get_option( 'pdmx_facebook_pixel_id' ) ): ?>
+			<!-- Facebook Pixel Code -->
+			<script>
+				!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+				n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+				n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+				t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+				document,'script','https://connect.facebook.net/en_US/fbevents.js');
+				fbq('init', '<?php echo get_option( 'pdmx_facebook_pixel_id' ); ?>'); // Insert your pixel ID here.
+				fbq('track', 'PageView');
+			</script>
+			<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=<?php echo get_option( 'pdmx_facebook_pixel_id' ); ?>&ev=PageView&noscript=1" /></noscript>
+			<!-- END Facebook Pixel Code -->
 		<?php endif;
 	}
 } // class pdmx end
