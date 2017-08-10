@@ -2,6 +2,6 @@
  * plugdigital.net
  */
 
-#login-image-current{ background-repeat: no-repeat; background-size: contain; width: 100%; height: 150px }
+#login-image-current{ background-repeat: no-repeat; background-size: contain; height: 150px; margin-bottom: 1.5em; width: 100% }
 
-.button-danger{ color: #fff !important; background-color: #d9534f !important; border-color: #d43f3a !important }
+.button-danger{ background-color: #d9534f !important; border-color: #d43f3a !important; color: #fff !important}
