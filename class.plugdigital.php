@@ -1,9 +1,12 @@
 <?php
 /**
 * pdmx - PlugDigital México
+* Author: Manuel Padilla manuel@plugdigital.net
 */
+
 class pdmx {
-	const NONCE               = 'plugdigital';
+	const NONCE = 'plugdigital';
+
 	private static $initiated = false;
 
 	public static function init() {
