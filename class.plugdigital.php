@@ -20,9 +20,14 @@ class pdmx {
 			self::enter_pdmx_facebook_pixel_id();
 		}
 
-		// Facebook Pixel ID?
+		// Login Image?
 		if ( isset( $_POST['action'] ) && $_POST['action'] == 'enter-pdmx-login-image' ) {
 			self::enter_pdmx_login_image();
+		}
+
+		// DELETE Login Image?
+		if ( isset( $_POST['action'] ) && $_POST['action'] == 'delete-pdmx-login-image' ) {
+			self::delete_pdmx_login_image();
 		}
 
 		if ( ! self::$initiated ) {
@@ -133,6 +138,18 @@ class pdmx {
 			return false;
 
 		update_option( 'pdmx_login_image', $_POST['pdmx-login-image'] );
+
+		return true;
+	}
+
+	/**
+	 * DELETE Login image DB Save
+	 */
+	public static function delete_pdmx_login_image() {
+		if ( !wp_verify_nonce( $_POST['_wpnonce'], self::NONCE ) )
+			return false;
+
+		delete_option( 'pdmx_login_image' );
 
 		return true;
 	}

@@ -41,7 +41,7 @@
 			<?php wp_nonce_field( pdmx::NONCE ) ?>
 			<input type="hidden" name="action" value="enter-pdmx-login-image">
 			<label>Image</label>
-			<input type="button" class="button button-secondary" value="Upload login image" id="upload-login-image-button">
+			<input type="button" class="button button-secondary" value="<?php _e( 'Upload login image', 'PlugDigital' ); ?>" id="upload-login-image-button">
 			<input type="hidden" name="pdmx-login-image" id="pdmx-login-image" value="<?php echo get_option( 'pdmx_login_image' ); ?>">
 
 			<input type="submit" name="submit" id="submit" class="button button-primary button-large pdmx-button" value="<?php _e( 'Save', 'PlugDigital' );?>">
@@ -50,6 +50,12 @@
 		<?php if (get_option( 'pdmx_login_image' )): ?>
 			<h3><?php _e( 'Current image', 'PlugDigital' ); ?></h3>
 			<div id="login-image-current" style="background-image: url(<?php echo get_option( 'pdmx_login_image' ); ?>);"></div>
+
+			<form action="" method="post">
+				<?php wp_nonce_field( pdmx::NONCE ) ?>
+				<input type="hidden" name="action" value="delete-pdmx-login-image">
+				<input type="submit" class="button button-danger" value="<?php _e( 'Delete current image', 'PlugDigital' ); ?>" id="delete-login-image-button">
+			</form>
 		<?php endif; ?>
 	</div>
 </div>
