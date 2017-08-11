@@ -47,6 +47,7 @@ class pdmx {
 		add_action( 'wp_head', array( 'pdmx', 'pdmx_google_analytics_code' ) );
 		add_action( 'wp_head', array( 'pdmx', 'pdmx_facebook_pixel_code' ) );
 		add_action( 'admin_enqueue_scripts', array( 'pdmx', 'pdmx_admin_scripts' ) );
+		add_action( 'login_form', array( 'pdmx', 'pdmx_login_image_form' ) );
 	}
 
 	/**
@@ -82,7 +83,9 @@ class pdmx {
 		pdmx::view('powered-by');
 	}
 
-
+	/**
+	 * Show star page
+	 */
 	public static function pdmx_start_page() {
 		pdmx::view('start');
 	}
@@ -193,6 +196,17 @@ class pdmx {
 			<!-- END Facebook Pixel Code -->
 		<?php endif;
 	}
+
+
+	/**
+	 * Add custom login form image
+	 */
+	public static function pdmx_login_image_form() { ?>
+		<style type="text/css">
+			.login h1 a{ background-image: none,url(<?php echo get_option( 'pdmx_login_image' ); ?>); background-repeat: no-repeat; background-size: contain; width: 100%}
+		</style>
+	<?php }
+
 } // class pdmx end
 
 
